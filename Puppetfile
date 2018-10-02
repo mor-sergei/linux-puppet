@@ -1,2 +1,2 @@
-mod 'puppetlabs-stdlib'
-mod 'puppetlabs-apt'
+mod 'puppetlabs-stdlib', '5.0.0'
+mod 'puppetlabs-apt', '6.1.0'
