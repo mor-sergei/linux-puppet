@@ -36,8 +36,8 @@ class role::deb_build_server {
     # Debian configuration change
     # include profile::debb_config
 
-    # NTP Service for Debian
-    # include profile::debb_ntp
+    # NTP client timesyncd for Debian
+    include profile::debb_timesyncd
 
     # Python 3 + packages for Debian
     # include profile::debb_py3
