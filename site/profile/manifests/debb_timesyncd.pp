@@ -24,6 +24,6 @@ class profile::debb_timesyncd {
     ensure => file,
     source => $tsync_cfg,
     before => Service['systemd-timesyncd'],
-    notify => Sevice['systemd-timesyncd'],
+    notify => Service['systemd-timesyncd'],
   }
 }
