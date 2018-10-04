@@ -1,6 +1,7 @@
 # Debian 8 time sync system
 # Implementation logic:
 #  - Shutdown NTP
+#  - Remove package NTP
 #  - Set Enable Timesyncd
 #  - Set NTP Enable - off 
 #  - Upload ntp.conf -. /etc/timesyncd.conf
@@ -18,6 +19,11 @@ class profile::debb_timesyncd {
   service { 'ntp':
     ensure => stopped,
     enable => false,
+    before => Service['systemd-timesyncd'],
+  }
+  package { 'ntp':
+    ensure => 'absent',
+    require => Service['ntp'],
     before => Service['systemd-timesyncd'],
   }
   file { '/etc/systemd/timesyncd.conf':
