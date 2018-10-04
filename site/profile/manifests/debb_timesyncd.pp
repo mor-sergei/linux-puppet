@@ -7,22 +7,23 @@
 #  - Set subscription on /etc/timesyncd.conf change
 #  - Start Timesyncd Service
 
-class debb_timesyncd {
+class profile::debb_timesyncd {
   $tsync_cfg = 'puppet:///modules/profile/timesyncd.conf'
-
+  
+  service { 'systemd-timesyncd':
+    ensure => running,
+    enable => true,
+    subscribe => File['/etc/systemd/timesyncd.conf'],
+  }
   service { 'ntp':
     ensure => stopped,
     enable => false,
+    before => Service['systemd-timesyncd'],
   }
   file { '/etc/systemd/timesyncd.conf':
     ensure => file,
     source => $tsync_cfg,
+    before => Service['systemd-timesyncd'],
     notify => Sevice['systemd-timesyncd'],
-  }
-  service { 'systemd-timesyncd':
-    ensure => running,
-    enable => false,
-    subscribe => File['/etc/systemd/timesyncd.conf'],
-    require => [File['/etc/systemd/timesyncd.conf'], Service['ntp']],
   }
 }
